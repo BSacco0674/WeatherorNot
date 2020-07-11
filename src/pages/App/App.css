@@ -1,6 +1,7 @@
 .App {
   text-align: center;
 }
+
 body {
   width: 100%;
 }
@@ -35,15 +36,18 @@ body {
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
 }
+
 .nav {
   width: 100%;
 }
+
 .nav-wrapper {
-  background-color: rgba(10, 168, 84, 0.692);
+  background-color: cornflowerblue;
 }
 
 @font-face {
@@ -51,10 +55,10 @@ body {
   font-style: normal;
   font-weight: 400;
   src: local("Material Icons"),
-       local("MaterialIcons-Regular"),
-       url(https://rawgit.com/google/material-design-icons/master/iconfont/MaterialIcons-Regular.woff2) format("woff2"),
-       url(https://rawgit.com/google/material-design-icons/master/iconfont/MaterialIcons-Regular.woff) format("woff"),
-       url(https://rawgit.com/google/material-design-icons/master/iconfont/MaterialIcons-Regular.ttf) format("truetype");
+    local("MaterialIcons-Regular"),
+    url(https://rawgit.com/google/material-design-icons/master/iconfont/MaterialIcons-Regular.woff2) format("woff2"),
+    url(https://rawgit.com/google/material-design-icons/master/iconfont/MaterialIcons-Regular.woff) format("woff"),
+    url(https://rawgit.com/google/material-design-icons/master/iconfont/MaterialIcons-Regular.ttf) format("truetype");
 }
 
 .material-icons {
@@ -82,5 +86,4 @@ body {
   /* Support for IE. */
   font-feature-settings: "liga";
 }
-
 
