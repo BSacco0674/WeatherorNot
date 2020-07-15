@@ -5,9 +5,8 @@ import NavBar from "../../components/NavBar/NavBar";
 import LoginPage from "../LoginPage/LoginPage";
 import SignupPage from "../SignupPage/SignupPage";
 import userService from "../../services/userService";
-import Form from "../src/app_componet/form.componet";
-import Weather from "../src/app_componet/weather.component";
-
+import Form from "../../components/Form/Form";
+import Weather from "../../components/Weather/Weather";
 
 class App extends Component {
   state = {
@@ -24,7 +23,7 @@ class App extends Component {
     error: false,
   };
 
-  this.weatherIcon = {
+  weatherIcon = {
     Thunderstorm: "",
     Drizzle: "",
     Rain: "",
@@ -33,75 +32,71 @@ class App extends Component {
     Clear: "",
     Clouds: "",
   };
-}
 
-get_WeatherIcon(icons, rangeId) {
-  switch (true) {
-    case rangeId >= 200 && rangeId < 232:
-      this.setState({ icon: icons.Thunderstorm });
-      break;
-    case rangeId >= 300 && rangeId <= 321:
-      this.setState({ icon: icons.Drizzle });
-      break;
-    case rangeId >= 500 && rangeId <= 521:
-      this.setState({ icon: icons.Rain });
-      break;
-    case rangeId >= 600 && rangeId <= 622:
-      this.setState({ icon: icons.Snow });
-      break;
-    case rangeId >= 701 && rangeId <= 781:
-      this.setState({ icon: icons.Atmosphere });
-      break;
-    case rangeId === 800:
-      this.setState({ icon: icons.Clear });
-      break;
-    case rangeId >= 801 && rangeId <= 804:
-      this.setState({ icon: icons.Clouds });
-      break;
-    default:
-      this.setState({ icon: icons.Clouds });
-  }
-}
-
-getWeather = async (e) => {
-  e.preventDefault();
-
-  const country = e.target.elements.country.value;
-  const city = e.target.elements.city.value;
-
-  if (country && city) {
-    const api_call = await fetch(
-      `http://api.openweathermap.org/data/2.5/weather?q=${city},${country}&appid=${REACT_APP_API_KEY}&units=imperial`
-    );
-
-    const response = await api_call.json();
-    console.log(response);
-
-
-    this.setState({
-      city: `${response.name}, ${response.sys.country}`,
-      country: response.sys.country,
-      main: response.weather[0].main,
-      celsius: response.main.temp,
-      temp_max: response.main.temp_max,
-      temp_min: response.main.temp_min,
-      description: response.weather[0].description,
-      dewpoint: response.main.feels_like,
-      error: false,
-    });
-
-     // seting icons
-     this.get_WeatherIcon(this.weatherIcon, response.weather[0].id);
-
-     console.log(response);
-   } else {
-     this.setState({
-       error: true,
-     });
-   }
+  get_WeatherIcon = (icons, rangeId) => {
+    switch (true) {
+      case rangeId >= 200 && rangeId < 232:
+        this.setState({ icon: icons.Thunderstorm });
+        break;
+      case rangeId >= 300 && rangeId <= 321:
+        this.setState({ icon: icons.Drizzle });
+        break;
+      case rangeId >= 500 && rangeId <= 521:
+        this.setState({ icon: icons.Rain });
+        break;
+      case rangeId >= 600 && rangeId <= 622:
+        this.setState({ icon: icons.Snow });
+        break;
+      case rangeId >= 701 && rangeId <= 781:
+        this.setState({ icon: icons.Atmosphere });
+        break;
+      case rangeId === 800:
+        this.setState({ icon: icons.Clear });
+        break;
+      case rangeId >= 801 && rangeId <= 804:
+        this.setState({ icon: icons.Clouds });
+        break;
+      default:
+        this.setState({ icon: icons.Clouds });
+    }
   };
 
+  getWeather = async (e) => {
+    e.preventDefault();
 
+    const country = e.target.elements.country.value;
+    const city = e.target.elements.city.value;
+
+    if (country && city) {
+      const api_call = await fetch(
+        `http://api.openweathermap.org/data/2.5/weather?q=${city},${country}&appid=${process.env.API_KEY}&units=imperial`
+      );
+
+      const response = await api_call.json();
+      console.log(response);
+
+      this.setState({
+        city: `${response.name}, ${response.sys.country}`,
+        country: response.sys.country,
+        main: response.weather[0].main,
+        celsius: response.main.temp,
+        temp_max: response.main.temp_max,
+        temp_min: response.main.temp_min,
+        description: response.weather[0].description,
+        dewpoint: response.main.feels_like,
+        error: false,
+      });
+
+      // seting icons
+      this.get_WeatherIcon(this.weatherIcon, response.weather[0].id);
+
+      console.log(response);
+    } else {
+      this.setState({
+        error: true,
+      });
+    }
+  };
 
   handleLogout = () => {
     userService.logout();
@@ -136,7 +131,7 @@ getWeather = async (e) => {
             />
           )}
         />
-      <Form loadweather={this.getWeather} error={this.state.error} />
+        <Form loadweather={this.getWeather} error={this.state.error} />
         <Weather
           cityname={this.state.city}
           weatherIcon={this.state.icon}
@@ -150,9 +145,5 @@ getWeather = async (e) => {
     );
   }
 }
-
-
-
-
 
 export default App;
