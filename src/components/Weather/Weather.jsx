@@ -1,8 +1,16 @@
 import React from "react";
 import "./Weather.css";
 
+
+
 const Weather = props => {
+  handleSubmit = (e) => {
+    e.preventDefault();
+    this.props.handleAddCity(this.state.formData);
+  };
   return (
+    <>
+    <form >
     <div className="container text-light">
       <div className="Card">
         <h1 className="text-white py-3">{props.cityname}</h1>
@@ -26,6 +34,16 @@ const Weather = props => {
         <h4>Dewpoint {((props.dewpoint*1.8)+32).toFixed(1)} &deg;F</h4>
       </div>
     </div>
+    <button
+          class="btn waves-effect waves-light"
+          type="submit"
+          name="action"
+        >
+          Save City
+          <i class="material-icons right">send</i>
+        </button>
+    </form>
+    </>
   );
 };
 

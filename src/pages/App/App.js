@@ -153,14 +153,7 @@ class App extends Component {
           description={this.state.description}
           dewpoint={this.state.dewpoint}
         />
-        <button
-          class="btn waves-effect waves-light"
-          type="submit"
-          name="action"
-        >
-          Save City
-          <i class="material-icons right">send</i>
-        </button>
+      
       </>
     );
   }
