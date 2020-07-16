@@ -23,7 +23,7 @@ const Weather = props => {
           {props.description.charAt(0).toUpperCase() +
             props.description.slice(1)}
         </h4>
-          <h4>{props.dewpoint}</h4>
+        <h4>Dewpoint {((props.dewpoint*1.8)+32).toFixed(1)} &deg;F</h4>
       </div>
     </div>
   );
