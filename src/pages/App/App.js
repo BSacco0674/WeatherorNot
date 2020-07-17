@@ -30,7 +30,7 @@ class App extends Component {
     Rain: "",
     Snow: "",
     Atmosphere: "",
-    Clear: "",
+    Clear: "../../assets/itscold.gif",
     Clouds: "",
   };
 
@@ -75,22 +75,27 @@ class App extends Component {
 
       const response = await api_call.json();
       console.log(response);
-
-      this.setState({
-        city: `${response.name}, ${response.sys.country}`,
-        country: response.sys.country,
-        main: response.weather[0].main,
-        celsius: response.main.temp,
-        temp_max: response.main.temp_max,
-        temp_min: response.main.temp_min,
-        description: response.weather[0].description,
-        dewpoint:
-          (response.main.temp - 32) / 1.8 - (100 - response.main.humidity) / 5,
-        error: false,
-      });
-
-      // seting icons
-      this.get_WeatherIcon(this.weatherIcon, response.weather[0].id);
+      if (response.sys) {
+        this.setState({
+          city: `${response.name}, ${response.sys.country}`,
+          country: response.sys.country,
+          main: response.weather[0].main,
+          celsius: response.main.temp,
+          temp_max: response.main.temp_max,
+          temp_min: response.main.temp_min,
+          description: response.weather[0].description,
+          dewpoint:
+            (response.main.temp - 32) / 1.8 -
+            (100 - response.main.humidity) / 5,
+          error: false,
+        });
+        // seting icons
+        this.get_WeatherIcon(this.weatherIcon, response.weather[0].id);
+      } else {
+        this.setState({
+          error: true,
+        });
+      }
 
       console.log(response);
     } else {
@@ -153,7 +158,6 @@ class App extends Component {
           description={this.state.description}
           dewpoint={this.state.dewpoint}
         />
-      
       </>
     );
   }
