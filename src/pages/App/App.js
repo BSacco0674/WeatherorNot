@@ -81,6 +81,7 @@ class App extends Component {
           country: response.sys.country,
           main: response.weather[0].main,
           celsius: response.main.temp,
+          weatherIcon: response.weather[0].icon,
           temp_max: response.main.temp_max,
           temp_min: response.main.temp_min,
           description: response.weather[0].description,
@@ -89,8 +90,6 @@ class App extends Component {
             (100 - response.main.humidity) / 5,
           error: false,
         });
-        // seting icons
-        this.get_WeatherIcon(this.weatherIcon, response.weather[0].id);
       } else {
         this.setState({
           error: true,
@@ -151,7 +150,7 @@ class App extends Component {
         <Form loadweather={this.getWeather} error={this.state.error} />
         <Weather
           cityname={this.state.city}
-          weatherIcon={this.state.icon}
+          weatherIcon={this.state.weatherIcon}
           temp_celsius={this.state.celsius}
           temp_max={this.state.temp_max}
           temp_min={this.state.temp_min}
