@@ -1,11 +1,10 @@
 const City = require("../models/city");
-
 module.exports = {
   create,
+  getAll,
 };
-
 function create(req, res) {
-  console.log("is this working");
+  console.log(req.body);
   req.body.user = req.user._id;
   City.create(req.body)
     .then((city) => {
@@ -14,4 +13,9 @@ function create(req, res) {
     .catch((err) => {
       res.json(err);
     });
+}
+function getAll(req, res) {
+  City.find({ user: req.user._id }).then((cities) => {
+    res.json(cities);
+  });
 }
