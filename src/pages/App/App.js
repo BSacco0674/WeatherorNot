@@ -8,7 +8,6 @@ import userService from "../../services/userService";
 import Form from "../../components/Form/Form";
 import Weather from "../../components/Weather/Weather";
 import * as cityAPI from "../../services/city-api";
-
 class App extends Component {
   state = {
     user: userService.getUser(),
@@ -22,8 +21,8 @@ class App extends Component {
     description: "",
     dewpoint: null,
     error: false,
+    cities: [],
   };
-
   weatherIcon = {
     Thunderstorm: "",
     Drizzle: "",
@@ -33,7 +32,6 @@ class App extends Component {
     Clear: "../../assets/itscold.gif",
     Clouds: "",
   };
-
   get_WeatherIcon = (icons, rangeId) => {
     switch (true) {
       case rangeId >= 200 && rangeId < 232:
@@ -61,22 +59,22 @@ class App extends Component {
         this.setState({ icon: icons.Clouds });
     }
   };
-
   getWeather = async (e) => {
     e.preventDefault();
-
+    console.log(e.target);
     const country = e.target.elements.country.value;
     const city = e.target.elements.city.value;
-
     if (country && city) {
       const api_call = await fetch(
         `http://api.openweathermap.org/data/2.5/weather?q=${city},${country}&appid=${process.env.REACT_APP_API_KEY}&units=imperial`
       );
-
       const response = await api_call.json();
       if (response.sys) {
+        const locale = {};
+        locale["city"] = response.name;
+        locale["country"] = response.sys.country;
         this.setState({
-          city: `${response.name}, ${response.sys.country}`,
+          city: `${response.name}`,
           country: response.sys.country,
           main: response.weather[0].main,
           celsius: response.main.temp,
@@ -88,13 +86,13 @@ class App extends Component {
             (response.main.temp - 32) / 1.8 -
             (100 - response.main.humidity) / 5,
           error: false,
+          place: locale,
         });
       } else {
         this.setState({
           error: true,
         });
       }
-
       console.log(response);
     } else {
       this.setState({
@@ -102,26 +100,26 @@ class App extends Component {
       });
     }
   };
-
   handleLogout = () => {
     userService.logout();
     this.setState({ user: null });
   };
-
   handleSignupOrLogin = () => {
     this.setState({ user: userService.getUser() });
   };
-
-  handleAddCity = async (newCityData) => {
-    const newCity = await cityAPI.create(newCityData);
+  handleAddCity = async (cityData) => {
+    const newCity = await cityAPI.create(cityData);
     this.setState(
       (state) => ({
-        city: [...state.city, newCity],
+        cities: [...state.cities, newCity],
       }),
       () => this.props.history.push("/city")
     );
   };
-
+  async componentDidMount() {
+    const cities = await cityAPI.getAll();
+    this.setState({ cities });
+  }
   render() {
     return (
       <>
@@ -152,6 +150,7 @@ class App extends Component {
           handleAddCity={this.handleAddCity}
           city={this.state.city}
           country={this.state.country}
+          place={this.state.place}
         />
         <Weather
           cityname={this.state.city}
@@ -162,9 +161,11 @@ class App extends Component {
           description={this.state.description}
           dewpoint={this.state.dewpoint}
         />
+        {this.state.cities.map((city) => (
+          <div>{city.city}</div>
+        ))}
       </>
     );
   }
 }
-
 export default App;
