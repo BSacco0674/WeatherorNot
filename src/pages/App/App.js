@@ -74,7 +74,6 @@ class App extends Component {
       );
 
       const response = await api_call.json();
-      console.log(response);
       if (response.sys) {
         this.setState({
           city: `${response.name}, ${response.sys.country}`,
@@ -147,7 +146,13 @@ class App extends Component {
             />
           )}
         />
-        <Form loadweather={this.getWeather} error={this.state.error} />
+        <Form
+          loadweather={this.getWeather}
+          error={this.state.error}
+          handleAddCity={this.handleAddCity}
+          city={this.state.city}
+          country={this.state.country}
+        />
         <Weather
           cityname={this.state.city}
           weatherIcon={this.state.weatherIcon}

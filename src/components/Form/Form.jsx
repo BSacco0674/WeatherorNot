@@ -27,6 +27,7 @@ const Form = props => {
           </div>
           <div className="col-md-3 mt-md-0 mt-2 text-md-left ">
             <button className="btn btn-warning">Get Weather</button>
+            <button className="btn btn-warning" onClick={() => props.handleAddCity({city, country})}>Save City2</button>
           </div>
         </div>
       </form>

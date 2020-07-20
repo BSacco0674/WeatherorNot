@@ -4,10 +4,7 @@ import "./Weather.css";
 
 
 class Weather extends Component {
-  handleSubmit = (e) => {
-    e.preventDefault();
-    this.props.handleAddCity(this.state.formData);
-  };
+
   render(){
     const props = this.props
     const dewpoint = ((props.dewpoint*1.8)+32).toFixed(1)
@@ -38,14 +35,7 @@ class Weather extends Component {
           <h4>{props.dewpoint?`Dewpoint: ${dewpoint}°F`:""}</h4>
         </div>
       </div>
-      <button
-            className="btn waves-effect waves-light"
-            type="submit"
-            name="action"
-          >
-            Save City
-            <i className="material-icons right">send</i>
-          </button>
+     
       </form>
       </>
     );
