@@ -1,5 +1,6 @@
 import React from "react";
 import "./Form.css";
+import {Link} from "react-router-dom"
 const Form = props => {
   return (
     <div className="container h-100">
@@ -25,7 +26,7 @@ const Form = props => {
             />
           </div>
           <div className="col-md-3 mt-md-0 mt-2 text-md-left ">
-            <button className="btn btn-warning">Get Weather</button>
+            <Link to= {"/weather"}>Get Weather</Link>
             <button className="btn btn-warning" onClick={() => props.handleAddCity(props.place)}>Save City2</button>
           </div>
         </div>

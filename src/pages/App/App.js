@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Route } from "react-router-dom";
+import { Route, Link } from "react-router-dom";
 import "./App.css";
 import NavBar from "../../components/NavBar/NavBar";
 import LoginPage from "../LoginPage/LoginPage";
@@ -12,9 +12,11 @@ import { getWeather } from "../../services/weather-api";
 class App extends Component {
   state = {
     user: userService.getUser(),
-    weatherData: undefined,
     cities: [],
     icon: undefined,
+    place: undefined,
+    city: "",
+    country: "",
   };
 
   weatherIcon = {
@@ -54,16 +56,16 @@ class App extends Component {
     }
   };
 
-  getWeather = async (e) => {
-    e.preventDefault();
+  // getWeather = async (e) => {
+  //   e.preventDefault();
 
-    const country = e.target.elements.country.value;
-    const city = e.target.elements.city.value;
-    if (country && city) {
-      const weatherData = await getWeather();
-      this.setState({ weatherData: weatherData });
-    }
-  };
+  //   const country = e.target.elements.country.value;
+  //   const city = e.target.elements.city.value;
+  //   if (country && city) {
+  //     const weatherData = await getWeather(city, country);
+  //     this.setState({ weatherData: weatherData });
+  //   }
+  // };
 
   handleLogout = () => {
     userService.logout();
@@ -81,6 +83,16 @@ class App extends Component {
       () => this.props.history.push("/city")
     );
   };
+
+  handleChange = (e) => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    // this.setState({place:{city: this.state.city, country: this.state.country}})
+  };
+
   async componentDidMount() {
     const cities = await cityAPI.getAll();
     this.setState({ cities });
@@ -112,23 +124,43 @@ class App extends Component {
         <Route
           path="/"
           render={(history) => (
-            <Form
-              getWeather={this.getWeather}
-              error={this.state.error}
-              handleAddCity={this.handleAddCity}
-              city={this.state.city}
-              country={this.state.country}
-              place={this.state.place}
-            />
+            <form onSubmit={this.handleSubmit}>
+              {/* <div>{this.error ? error() : ""}</div> */}
+              <div className="row">
+                <div className="col-md-3 offset-md-2">
+                  <input
+                    onChange={this.handleChange}
+                    type="text"
+                    className="form-control"
+                    placeholder="City"
+                    name="city"
+                    autoComplete="off"
+                  />
+                </div>
+                <div className="col-md-3">
+                  <input
+                    onChange={this.handleChange}
+                    type="text"
+                    className="form-control"
+                    placeholder="Country"
+                    name="country"
+                    autoComplete="off"
+                  />
+                </div>
+                <div className="col-md-3 mt-md-0 mt-2 text-md-left ">
+                  <Link to={"/weather"}>Get Weather</Link>
+                </div>
+              </div>
+            </form>
           )}
         />
         <Route
           path="/weather"
           render={(history) => (
             <Weather
-              weatherData={this.state.weatherData}
               cityName={this.state.city}
-              weatherIcon={this.state.icon}
+              countryName={this.state.country}
+              handleAddCity={this.handleAddCity}
             />
           )}
         />
