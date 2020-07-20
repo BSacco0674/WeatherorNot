@@ -8,21 +8,15 @@ import userService from "../../services/userService";
 import Form from "../../components/Form/Form";
 import Weather from "../../components/Weather/Weather";
 import * as cityAPI from "../../services/city-api";
+import { getWeather } from "../../services/weather-api";
 class App extends Component {
   state = {
     user: userService.getUser(),
-    city: undefined,
-    country: undefined,
-    icon: undefined,
-    main: undefined,
-    celsius: undefined,
-    temp_max: null,
-    temp_min: null,
-    description: "",
-    dewpoint: null,
-    error: false,
+    weatherData: undefined,
     cities: [],
+    icon: undefined,
   };
+
   weatherIcon = {
     Thunderstorm: "",
     Drizzle: "",
@@ -59,47 +53,18 @@ class App extends Component {
         this.setState({ icon: icons.Clouds });
     }
   };
+
   getWeather = async (e) => {
     e.preventDefault();
-    console.log(e.target);
+
     const country = e.target.elements.country.value;
     const city = e.target.elements.city.value;
     if (country && city) {
-      const api_call = await fetch(
-        `http://api.openweathermap.org/data/2.5/weather?q=${city},${country}&appid=${process.env.REACT_APP_API_KEY}&units=imperial`
-      );
-      const response = await api_call.json();
-      if (response.sys) {
-        const locale = {};
-        locale["city"] = response.name;
-        locale["country"] = response.sys.country;
-        this.setState({
-          city: `${response.name}`,
-          country: response.sys.country,
-          main: response.weather[0].main,
-          celsius: response.main.temp,
-          weatherIcon: response.weather[0].icon,
-          temp_max: response.main.temp_max,
-          temp_min: response.main.temp_min,
-          description: response.weather[0].description,
-          dewpoint:
-            (response.main.temp - 32) / 1.8 -
-            (100 - response.main.humidity) / 5,
-          error: false,
-          place: locale,
-        });
-      } else {
-        this.setState({
-          error: true,
-        });
-      }
-      console.log(response);
-    } else {
-      this.setState({
-        error: true,
-      });
+      const weatherData = await getWeather();
+      this.setState({ weatherData: weatherData });
     }
   };
+
   handleLogout = () => {
     userService.logout();
     this.setState({ user: null });
@@ -144,22 +109,28 @@ class App extends Component {
             />
           )}
         />
-        <Form
-          loadweather={this.getWeather}
-          error={this.state.error}
-          handleAddCity={this.handleAddCity}
-          city={this.state.city}
-          country={this.state.country}
-          place={this.state.place}
+        <Route
+          path="/"
+          render={(history) => (
+            <Form
+              getWeather={this.getWeather}
+              error={this.state.error}
+              handleAddCity={this.handleAddCity}
+              city={this.state.city}
+              country={this.state.country}
+              place={this.state.place}
+            />
+          )}
         />
-        <Weather
-          cityname={this.state.city}
-          weatherIcon={this.state.weatherIcon}
-          temp_celsius={this.state.celsius}
-          temp_max={this.state.temp_max}
-          temp_min={this.state.temp_min}
-          description={this.state.description}
-          dewpoint={this.state.dewpoint}
+        <Route
+          path="/weather"
+          render={(history) => (
+            <Weather
+              weatherData={this.state.weatherData}
+              cityName={this.state.city}
+              weatherIcon={this.state.icon}
+            />
+          )}
         />
         {this.state.cities.map((city) => (
           <div>{city.city}</div>
