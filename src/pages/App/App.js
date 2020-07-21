@@ -90,7 +90,9 @@ class App extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    // this.setState({place:{city: this.state.city, country: this.state.country}})
+    this.setState({
+      place: { city: this.state.city, country: this.state.country },
+    });
   };
 
   async componentDidMount() {
