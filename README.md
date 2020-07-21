@@ -3,7 +3,7 @@
 ### Date: 7/21/2020
 
 #### By: Brandon Sacco
-#### [LinkedIn](https://www.linkedin.com/in/brandonsacco/) | ***
+#### [LinkedIn](https://www.linkedin.com/in/brandonsacco/) | 
 
 ### ***Description***
 
