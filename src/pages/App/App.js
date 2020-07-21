@@ -8,6 +8,7 @@ import userService from "../../services/userService";
 import CityListPage from "../CityListPage/CityListPage";
 import SearchPage from "../SearchPage/SearchPage";
 import CityDetailsPage from "../CityDetailsPage/CityDetailsPage";
+import Logo from "../../components/Logo/Logo";
 
 class App extends Component {
   state = {
@@ -30,9 +31,7 @@ class App extends Component {
         {this.state.user ? (
           ""
         ) : (
-          <div className="logo">
-            <img src="/assets/logo.gif"></img>
-          </div>
+          <Route exact path="/" render={() => <Logo />} />
         )}
         <Route
           exact

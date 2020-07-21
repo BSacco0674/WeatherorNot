@@ -15,17 +15,27 @@ class CityListPage extends Component {
     render() {
         return(
             <>  
-                {this.state.cities.map((city) => 
-                    <div key={city._id}>
-                    <Link
+            
+  <div class="row">
+        {this.state.cities.map((city) => 
+    <div key={city._id} class="col s6 m4">
+                     <Link
                         to={{
                             pathname: `/city/${city._id}`,
                             state: {city}
                         }}
-                    >{city.name}
-                    </Link><br></br>
-                    </div>
-                )}
+                    ><div  class="card blue-grey darken-1">
+        <div class="card-content white-text">
+          <span class="card-title">{city.name} </span>
+          
+        </div>
+                    
+      </div>
+    </Link><br></br>
+    </div>
+)}
+    </div>
+ 
             </>
         )
     }
