@@ -52,7 +52,7 @@ class LoginPage extends Component {
           <div className="row">
             <div className="col s12">
               <button className="btn green">Log In<i class="material-icons right">arrow_forward</i></button>&nbsp;&nbsp;&nbsp;
-              <Link className="btn red" to='/'>Cancel<i class="material-icons ">cancel</i></Link>
+              <Link className="btn red" to='/'>Cancel<i class="material-icons right">cancel</i></Link>
             </div>
           </div>
         </form>
