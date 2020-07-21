@@ -46,7 +46,7 @@ class SearchPage extends Component{
                         handleAddCity={this.handleAddCity}
                     />
                     <button className="btn green" onClick={() => this.handleAddCity()}>
-                        Add To Favorites
+                       Save this Town!
                     </button>
                     
                 </>    

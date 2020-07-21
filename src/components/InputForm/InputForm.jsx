@@ -27,20 +27,21 @@ class InputForm extends Component {
 
     render() {
         return (
-            <div>
-                <form className="col s12" ref={this.formRef} onSubmit={this.handleSubmit} >
-                    <div className="row">
-                        <div className="input-field col s3">
+            <div className="form-container">
+                <form className="col " ref={this.formRef} onSubmit={this.handleSubmit} >
+                    <div className="row form-row">
+                        <div className="input-field col">
                             <input name="name" id="name" type="text" className="active" value={this.state.formData.city} onChange={this.handleChange} required />
                             <label htmlFor="name">City</label>
                         </div>
-                        <div className="input-field col s3">
+                        <div className="input-field col">
                             <input name="country" id="country" type="text" className="active" value={this.state.formData.country} onChange={this.handleChange} required />
                             <label htmlFor="country">Country</label>
                         </div><br></br>
+                
                         <button
                             type="submit"
-                            className="btn red"
+                            className="btn green"
                             disabled={this.state.invalidForm}
                         ><i className="material-icons left">search</i>
                             Get Weather
