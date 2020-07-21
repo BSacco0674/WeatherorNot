@@ -9,6 +9,10 @@ import Form from "../../components/Form/Form";
 import Weather from "../../components/Weather/Weather";
 import * as cityAPI from "../../services/city-api";
 import { getWeather } from "../../services/weather-api";
+import City from '../../components/City'
+
+
+
 class App extends Component {
   state = {
     user: userService.getUser(),
@@ -95,6 +99,14 @@ class App extends Component {
     });
   };
 
+  handleDeleteCity = async id => {
+    await cityAPI.deleteCity(id);
+    this.setState(state => ({
+      cities: state.cities.filter(c => c._id !== id)
+    }), () => this.props.history.push('/city'))
+  }
+
+
   async componentDidMount() {
     const cities = await cityAPI.getAll();
     this.setState({ cities });
@@ -166,11 +178,17 @@ class App extends Component {
             />
           )}
         />
-        {this.state.cities.map((city) => (
-          <div>{city.city}</div>
-        ))}
-      </>
-    );
-  }
+        <Route exact path='/city' render={({history}) => (
+          <City 
+          cityName={this.state.city}
+          countryName={this.state.country} 
+          handleSubmit={this.state.handleSubmit}
+          handleDeleteCity={this.state.handleDeleteCity}
+          />
+        )}/>
+    </>
+    )
 }
+}
+
 export default App;
