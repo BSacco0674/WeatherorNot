@@ -5,11 +5,14 @@ const NavBar = ({ user, handleLogout }) => {
     <>
         <nav>
             <div className="nav-wrapper">
+                <a href="#!" class="brand-logo"><i class="material-icons">cloud</i>Weather or Not</a>
                 <ul id="nav-mobile" className="right">
-                    <li><a href=" " className="nav-link">Welcome, {user.name}</a></li>
-                    <li><a href=" " className="nav-link" onClick={handleLogout}>Log Out</a></li>
-                    <li><a href="/search" className="nav-link">Search</a></li>
-                    <li><a href="/cities" className="nav-link">My Cities</a></li>
+
+                    <li><a href="/search" className="nav-link"><i class="material-icons left">search</i>Search</a></li>
+                    <li><a href="/cities" className="nav-link"><i class="material-icons left">location_city</i>My Cities</a></li>
+                    <li><a href=" " className="nav-link"><i class="material-icons left">person</i>Welcome, {user.name}</a></li>
+                    <li><a href=" " className="nav-link" onClick={handleLogout}><i class="material-icons left">power_settings_new
+</i>Log Out</a></li>
                 </ul>
             </div>
         </nav>
