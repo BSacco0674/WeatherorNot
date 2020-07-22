@@ -29,13 +29,13 @@
 ![Welcome Page](public/assets/welcomepage.png)
 
 ###### Weather Screen
-![Paint List](public/assets/weatherscreen.png)
+![Weather Screen](public/assets/weatherscreen.png)
 
 
 
 ### ***Future Updates***
 
-- [x] ~~Make app scale for mobile~~
+- [ ] Make app scale for mobile
 - [ ] Add Dark Mode
 - [ ] Add Light Mode
 - [ ] Add an Allergy Tracker
